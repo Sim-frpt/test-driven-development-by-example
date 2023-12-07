@@ -1,4 +1,4 @@
-# Chapter 5
+# Chapter 6
 
 - $5 + 10CHF = $10 if rate is 2:1
 - ~~$5 \* 2 = $10~~
@@ -11,5 +11,5 @@
 - Equal object
 - ~~5CHF \* 2 = 10CHF~~
 - Dollar/Franc duplication
-- Common equals
+- ~~Common equals~~
 - Common times
