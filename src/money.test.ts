@@ -1,24 +1,24 @@
-import { Dollar, Franc } from "./models";
+import { Franc, Money } from "./models";
 
 test("multiplication", () => {
-  const five: Dollar = new Dollar(5);
+  const five: Money = Money.dollar(5);
 
-  expect(five.times(2)).toEqual(new Dollar(10));
-  expect(five.times(3)).toEqual(new Dollar(15));
+  expect(five.times(2)).toEqual(Money.dollar(10));
+  expect(five.times(3)).toEqual(Money.dollar(15));
 });
 
 test("equality", () => {
-  expect(new Dollar(5)).toEqual(new Dollar(5));
-  expect(new Dollar(5)).not.toEqual(new Dollar(6));
+  expect(Money.dollar(5)).toEqual(Money.dollar(5));
+  expect(Money.dollar(5)).not.toEqual(Money.dollar(6));
 
-  expect(new Franc(5)).toEqual(new Franc(5));
-  expect(new Franc(5)).not.toEqual(new Franc(6));
-  expect(new Franc(5)).not.toBe(new Dollar(5));
+  expect(Money.franc(5)).toEqual(Money.franc(5));
+  expect(Money.franc(5)).not.toEqual(Money.franc(6));
+  expect(Money.franc(5)).not.toBe(Money.dollar(5));
 });
 
 test("franc multiplication", () => {
-  const five: Franc = new Franc(5);
+  const five: Franc = Money.franc(5);
 
-  expect(five.times(2)).toEqual(new Franc(10));
-  expect(five.times(3)).toEqual(new Franc(15));
+  expect(five.times(2)).toEqual(Money.franc(10));
+  expect(five.times(3)).toEqual(Money.franc(15));
 });
