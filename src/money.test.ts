@@ -24,6 +24,10 @@ test("franc multiplication", () => {
 });
 
 test("currency", () => {
-  expect("USD").toEqual(Money.dollar(1).currency());
-  expect("CHF").toEqual(Money.franc(1).currency());
+  expect("USD").toEqual(Money.dollar(1).currency);
+  expect("CHF").toEqual(Money.franc(1).currency);
+});
+
+test("different class equality", () => {
+  expect(new Money(10, "CHF").equals(new Franc(10, "CHF"))).toBe(true);
 });
