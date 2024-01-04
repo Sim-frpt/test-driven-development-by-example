@@ -17,8 +17,13 @@ test("equality", () => {
 });
 
 test("franc multiplication", () => {
-  const five: Franc = Money.franc(5);
+  const five: Money = Money.franc(5);
 
   expect(five.times(2)).toEqual(Money.franc(10));
   expect(five.times(3)).toEqual(Money.franc(15));
+});
+
+test("currency", () => {
+  expect("USD").toEqual(Money.dollar(1).currency());
+  expect("CHF").toEqual(Money.franc(1).currency());
 });
