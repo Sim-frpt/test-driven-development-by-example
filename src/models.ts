@@ -1,8 +1,8 @@
 import { Expression } from "./interfaces";
 
 export class Money implements Expression {
-  protected amount: number;
-  protected _currency: string;
+  public amount: number;
+  public _currency: string;
 
   constructor(amount: number, currency: string) {
     this.amount = amount;
@@ -27,16 +27,29 @@ export class Money implements Expression {
   }
 
   public plus(addend: Money): Expression {
-    return new Money(this.amount + addend.amount, this.currency);
+    return new Sum(this, addend);
   }
 
   public get currency() {
     return this._currency;
   }
+
+  public reduce(to: string) {
+    return this;
+  }
 }
 
 export class Bank {
   public reduce(source: Expression, to: string): Money {
-    return Money.dollar(10);
+    return source.reduce(to);
+  }
+}
+
+export class Sum implements Expression {
+  constructor(public augend: Money, public addend: Money) {}
+
+  public reduce(to: string): Money {
+    const amount: number = this.augend.amount + this.addend.amount;
+    return new Money(amount, to);
   }
 }
