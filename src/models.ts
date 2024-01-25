@@ -34,22 +34,68 @@ export class Money implements Expression {
     return this._currency;
   }
 
-  public reduce(to: string) {
-    return this;
+  public reduce(bank: Bank, to: string) {
+    const rate = bank.rate(this.currency, to);
+
+    return new Money(this.amount / rate, to);
   }
 }
 
 export class Bank {
+  private rates: Map<Pair, number>;
+
+  constructor() {
+    this.rates = new Map();
+  }
+
   public reduce(source: Expression, to: string): Money {
-    return source.reduce(to);
+    return source.reduce(this, to);
+  }
+
+  /* Shitty object value equality cause js maps do allow Objects as keys, but compare by reference, not value */
+  public rate(from: string, to: string): number {
+    if (from === to) {
+      return 1;
+    }
+
+    let rate = null;
+
+    [...this.rates.keys()].forEach((pair: Pair) => {
+      if (JSON.stringify(pair) === JSON.stringify(new Pair(from, to))) {
+        rate = this.rates.get(pair);
+      }
+    });
+
+    if (!rate) {
+      throw new Error("rate is not in the bank! ");
+    }
+
+    return rate;
+  }
+
+  public addRate(from: string, to: string, rate: number): void {
+    this.rates.set(new Pair(from, to), rate);
   }
 }
 
 export class Sum implements Expression {
   constructor(public augend: Money, public addend: Money) {}
 
-  public reduce(to: string): Money {
+  public reduce(bank: Bank, to: string): Money {
     const amount: number = this.augend.amount + this.addend.amount;
     return new Money(amount, to);
+  }
+}
+
+class Pair {
+  constructor(private from: string, private to: string) {}
+
+  public equals(object: Object): boolean {
+    const pair: Pair = object as Pair;
+    return this.from === pair.from && this.to === pair.to;
+  }
+
+  public hashCode(): number {
+    return 0;
   }
 }
