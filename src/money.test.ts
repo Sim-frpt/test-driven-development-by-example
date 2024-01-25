@@ -63,3 +63,18 @@ test("reduce money to different currency", () => {
 test("identity rate", () => {
   expect(new Bank().rate("USD", "USD")).toBe(1);
 });
+
+test("mixed addition", () => {
+  const fiveBucks: Expression = Money.dollar(5);
+  const tenFrancs: Expression = Money.franc(10);
+  const bank = new Bank();
+
+  bank.addRate("CHF", "USD", 2);
+
+  const result: Money = bank.reduce(
+    fiveBucks.plus(tenFrancs) as Expression,
+    "USD"
+  );
+
+  expect(result).toEqual(Money.dollar(10));
+});
