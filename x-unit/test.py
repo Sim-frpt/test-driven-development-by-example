@@ -1,11 +1,16 @@
-from models import WasRun
+from models import WasRun, TestCase
 
-test = WasRun("testMethod")
+class TestCaseTest(TestCase):
+    def setUp(self):
+        self.test = WasRun("testMethod")
 
-print(test.wasRun)
+    def testRunning(self):
+        self.test.run()
+        assert(self.test.wasRun)
 
-test.run();
+    def testSetUp(self):
+        self.test.run()
+        assert(self.test.wasSetUp)
 
-
-print(test.wasRun)
-
+TestCaseTest("testRunning").run()
+TestCaseTest("testSetUp").run()
