@@ -1,4 +1,4 @@
-from models import WasRun, TestCase
+from models import TestResult, WasRun, TestCase
 
 class TestCaseTest(TestCase):
     def setUp(self):
@@ -19,7 +19,11 @@ class TestCaseTest(TestCase):
         result = test.run()
         assert("1 run, 1 failed" == result.summary)
 
-
+    def testFailedResultFormatting(self):
+        result = TestResult()
+        result.testStated()
+        result.testFailed()
+        assert("1 run, 1 failed" == result.summary())
 
 
 
@@ -29,3 +33,4 @@ class TestCaseTest(TestCase):
 TestCaseTest("testTemplateMethod").run()
 TestCaseTest("testResult").run()
 TestCaseTest("testFailedResult").run()
+TestCaseTest("testFailedResultFormatting").run()
